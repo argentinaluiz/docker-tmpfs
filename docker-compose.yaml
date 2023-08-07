@@ -1,0 +1,72 @@
+version: '3'
+
+services:
+
+  mysql_tmpfs:
+    profiles:
+      - mysql
+    image: mysql:8.0.30-debian
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=fullcycle
+    tmpfs:
+      - /var/lib/mysql
+  
+  mysql:
+    profiles:
+      - mysql
+    image: mysql:8.0.30-debian
+    ports:
+      - 3307:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=fullcycle
+  
+  postgres_tmpfs:
+    profiles:
+      - postgres
+    image: postgres:13-alpine
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=fullcycle
+    tmpfs:
+      - /var/lib/postgresql/data
+  
+  postgres:
+    profiles:
+      - postgres
+    image: postgres:13-alpine
+    ports:
+      - 5433:5432
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=fullcycle
+  
+  sqlserver_tmpfs:
+    profiles:
+      - sqlserver
+    build: 
+      context: ./.docker/sql-server
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=StrongPassw0rd
+    tmpfs:
+      - /var/opt/mssql/data
+  
+  sqlserver:
+    profiles:
+      - sqlserver
+    build: 
+      context: ./.docker/sql-server
+    ports:
+      - 1434:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=StrongPassw0rd
+      - MSSQL_PID=Developer
