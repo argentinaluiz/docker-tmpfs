@@ -70,6 +70,7 @@ export const CONNECTIONS = {
       entities: [Category],
       subscribers: [],
       migrations: [],
+      options: { encrypt: false },
     },
     tmpfs: {
       type: "mssql",
@@ -83,6 +84,7 @@ export const CONNECTIONS = {
       entities: [Category],
       subscribers: [],
       migrations: [],
+      options: { encrypt: false },
     },
   },
 };

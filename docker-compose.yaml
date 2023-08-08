@@ -56,8 +56,10 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=StrongPassw0rd
-    tmpfs:
-      - /var/opt/mssql/data
+    volumes:
+      - /data:/var/opt/mssql/data
+    # tmpfs:
+    #   - /var/opt/mssql/data
   
   sqlserver:
     profiles:
@@ -68,5 +70,4 @@ services:
       - 1434:1433
     environment:
       - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=StrongPassw0rd
-      - MSSQL_PID=Developer
+      - SA_PASSWORD=StrongPassw0rd
