@@ -73,6 +73,7 @@ services:
     ######## criar loopback filesystem em cima do tmps ######
     # sudo su
     # mkdir /ramcache
+    # mount -t tmpfs -o size=1G tmpfs /ramcache
     # dd if=/dev/zero of=disk.img bs=1M count=10240
     # losetup /dev/loop0 disk.img
     # mkfs.ext4 /dev/loop0
