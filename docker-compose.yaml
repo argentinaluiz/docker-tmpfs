@@ -12,8 +12,6 @@ services:
     profiles:
       - mysql
     image: mysql:8.0.30-debian
-    ports:
-      - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=fullcycle
@@ -24,8 +22,6 @@ services:
     profiles:
       - mysql
     image: mysql:8.0.30-debian
-    ports:
-      - 3307:3306
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=fullcycle
@@ -34,8 +30,6 @@ services:
     profiles:
       - postgres
     image: postgres:13-alpine
-    ports:
-      - 5432:5432
     environment:
       - POSTGRES_PASSWORD=root
       - POSTGRES_DB=fullcycle
@@ -46,8 +40,6 @@ services:
     profiles:
       - postgres
     image: postgres:13-alpine
-    ports:
-      - 5433:5432
     environment:
       - POSTGRES_PASSWORD=root
       - POSTGRES_DB=fullcycle
@@ -57,13 +49,11 @@ services:
       - sqlserver
     build: 
       context: ./.docker/sql-server
-    ports:
-      - 1433:1433
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=StrongPassw0rd
     volumes:
-      - /data:/var/opt/mssql/data
+      - /data:/var/opt/mssql/data:cached
     # tmpfs:
     #   - /var/opt/mssql/data
     
@@ -74,6 +64,7 @@ services:
     # sudo su
     # mkdir /ramcache
     # mount -t tmpfs -o size=1G tmpfs /ramcache
+    # cd /ramcache
     # dd if=/dev/zero of=disk.img bs=1M count=10240
     # losetup /dev/loop0 disk.img
     # mkfs.ext4 /dev/loop0
@@ -90,8 +81,6 @@ services:
       - sqlserver
     build: 
       context: ./.docker/sql-server
-    ports:
-      - 1434:1433
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=StrongPassw0rd
@@ -101,8 +90,6 @@ services:
     profiles:
       - mongo
     image: mongo:6.0.5 
-    ports:
-      - 27017:27017
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=root
@@ -113,8 +100,6 @@ services:
     profiles:
       - mongo
     image: mongo:6.0.5 
-    ports:
-      - 27018:27017
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=root
@@ -132,5 +117,5 @@ services:
     image: container-registry.oracle.com/database/free:23.2.0.0
     environment:
       - ORACLE_PWD=root
-    tmpfs:
-      - /opt/oracle/oradata:rw
+    volumes:
+      - /data:/opt/oracle/oradata

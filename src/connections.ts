@@ -4,8 +4,8 @@ export const CONNECTIONS = {
   mysql: {
     normal: {
       type: "mysql",
-      host: "localhost",
-      port: 3307,
+      host: "mysql",
+      port: 3306,
       username: "root",
       password: "root",
       database: "fullcycle",
@@ -17,7 +17,7 @@ export const CONNECTIONS = {
     },
     tmpfs: {
       type: "mysql",
-      host: "localhost",
+      host: "mysql_tmpfs",
       port: 3306,
       username: "root",
       password: "root",
@@ -32,8 +32,8 @@ export const CONNECTIONS = {
   postgres: {
     normal: {
       type: "postgres",
-      host: "localhost",
-      port: 5433,
+      host: "postgres",
+      port: 5432,
       username: "postgres",
       password: "root",
       database: "fullcycle",
@@ -45,7 +45,7 @@ export const CONNECTIONS = {
     },
     tmpfs: {
       type: "postgres",
-      host: "localhost",
+      host: "postgres_tmpfs",
       port: 5432,
       username: "postgres",
       password: "root",
@@ -60,8 +60,8 @@ export const CONNECTIONS = {
   sqlserver: {
     normal: {
       type: "mssql",
-      host: "localhost",
-      port: 1434,
+      host: "sqlserver",
+      port: 1433,
       username: "sa",
       password: "StrongPassw0rd",
       database: "fullcycle",
@@ -74,7 +74,7 @@ export const CONNECTIONS = {
     },
     tmpfs: {
       type: "mssql",
-      host: "localhost",
+      host: "sqlserver_tmpfs",
       port: 1433,
       username: "sa",
       password: "StrongPassw0rd",
@@ -90,8 +90,8 @@ export const CONNECTIONS = {
   mongo: {
     normal: {
       type: "mongodb",
-      host: "localhost",
-      port: 27018,
+      host: "mongo",
+      port: 27017,
       username: "root",
       password: "root",
       database: "fullcycle",
@@ -104,7 +104,7 @@ export const CONNECTIONS = {
     },
     tmpfs: {
       type: "mongodb",
-      host: "localhost",
+      host: "mongo_tmpfs",
       port: 27017,
       username: "root",
       password: "root",
