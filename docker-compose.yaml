@@ -2,6 +2,12 @@ version: '3'
 
 services:
 
+  app:
+    build: .
+    volumes:
+      - .:/home/node/app
+
+
   mysql_tmpfs:
     profiles:
       - mysql
@@ -60,6 +66,23 @@ services:
       - /data:/var/opt/mssql/data
     # tmpfs:
     #   - /var/opt/mssql/data
+    
+    # tmpfs: # o sqlserver ainda não suporta tmpfs nativamente
+    #   - /var/opt/mssql/data
+    # https://github.com/microsoft/mssql-docker/issues/110
+    ######## criar loopback filesystem em cima do tmps ######
+    # sudo su
+    # mkdir /ramcache
+    # dd if=/dev/zero of=disk.img bs=1M count=10240
+    # losetup /dev/loop0 disk.img
+    # mkfs.ext4 /dev/loop0
+    # mkdir /data
+    # mount /dev/loop0 /data
+    ######## desfazer a montagem ###########
+    # umount /data
+    # losetup -d /dev/loop0
+    # rm /ramcache/disk.img
+    # umount /ramcache
   
   sqlserver:
     profiles:
@@ -71,3 +94,42 @@ services:
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=StrongPassw0rd
+
+  
+  mongo_tmpfs:
+    profiles:
+      - mongo
+    image: mongo:6.0.5 
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    tmpfs:
+      - /data/db
+  
+  mongo:
+    profiles:
+      - mongo
+    image: mongo:6.0.5 
+    ports:
+      - 27018:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+  
+  oracle:
+    profiles:
+      - oracle
+    image: container-registry.oracle.com/database/free:23.2.0.0
+    environment:
+      - ORACLE_PWD=root
+  
+  oracle_tmpfs:
+    profiles:
+      - oracle
+    image: container-registry.oracle.com/database/free:23.2.0.0
+    environment:
+      - ORACLE_PWD=root
+    tmpfs:
+      - /opt/oracle/oradata:rw

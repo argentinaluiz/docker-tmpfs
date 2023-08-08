@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { Category } from "./entities";
+import { Category, CategoryMongoDB } from "./entities";
 import { DataSource } from "typeorm";
 import { CONNECTIONS } from "./connections";
 
@@ -8,7 +8,10 @@ async function createDataSource(options: any) {
   const dataSource = new DataSource(options);
 
   await dataSource.initialize();
-  await dataSource.manager.delete(Category, {});
+
+  const CategoryClass = dataSource.options.type === "mongodb" ? CategoryMongoDB : Category;
+
+  await dataSource.manager.delete(CategoryClass, {});
   return dataSource;
 }
 
@@ -16,12 +19,15 @@ async function testLogic(options: any) {
   const total = 100;
   const dataSource = await createDataSource(options);
   const myArray = Array.from(Array(total).keys());
+
+  const CategoryClass = dataSource.options.type === "mongodb" ? CategoryMongoDB : Category;
+
   for (const i of myArray) {
-    await dataSource.manager.save(Category, {
+    await dataSource.manager.save(CategoryClass, {
       name: Math.random().toString(),
     });
   }
-  const count = await dataSource.manager.count(Category);
+  const count = await dataSource.manager.count(CategoryClass);
   assert.equal(count, total);
   await dataSource.destroy();
 }

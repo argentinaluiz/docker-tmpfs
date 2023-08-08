@@ -1,4 +1,4 @@
-import { Category } from "./entities";
+import { Category, CategoryMongoDB } from "./entities";
 
 export const CONNECTIONS = {
   mysql: {
@@ -87,4 +87,62 @@ export const CONNECTIONS = {
       options: { encrypt: false },
     },
   },
+  mongo: {
+    normal: {
+      type: "mongodb",
+      host: "localhost",
+      port: 27018,
+      username: "root",
+      password: "root",
+      database: "fullcycle",
+      authSource: 'admin',
+      synchronize: true,
+      logging: false,
+      entities: [CategoryMongoDB],
+      subscribers: [],
+      migrations: [],
+    },
+    tmpfs: {
+      type: "mongodb",
+      host: "localhost",
+      port: 27017,
+      username: "root",
+      password: "root",
+      database: "fullcycle",
+      authSource: 'admin',
+      synchronize: true,
+      logging: false,
+      entities: [CategoryMongoDB],
+      subscribers: [],
+      migrations: [],
+    },
+  },
+  oracle: {
+    normal: {
+      type: "oracle",
+      host: "oracle",
+      port: 1521,
+      username: "system",
+      password: "root",
+      database: "free",
+      synchronize: true,
+      logging: false,
+      entities: [Category],
+      subscribers: [],
+      migrations: [],
+    },
+    tmpfs: {
+      type: "oracle",
+      host: "oracle_tmpfs",
+      port: 1521,
+      username: "system",
+      password: "root",
+      database: "free",
+      synchronize: true,
+      logging: false,
+      entities: [Category],
+      subscribers: [],
+      migrations: [],
+    },
+  }
 };

@@ -13,8 +13,10 @@
     "ts-node": "^10.9.1"
   },
   "dependencies": {
+    "mongodb": "^5.7.0",
     "mssql": "^9.1.2",
     "mysql2": "^3.6.0",
+    "oracledb": "^5.5.0",
     "pg": "^8.11.2",
     "typeorm": "^0.3.17"
   }
